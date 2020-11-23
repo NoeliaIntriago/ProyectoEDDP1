@@ -5,17 +5,33 @@
  */
 package sistematurnos;
 
+import java.io.IOException;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
 /**
  *
  * @author Noelia Intriago
  */
-public class SistemaTurnos {
-
-    /**
-     * @param args the command line arguments
-     */
+public class SistemaTurnos extends Application{
     public static void main(String[] args) {
-        // TODO code application logic here
+        launch();
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        try{
+            Parent p = FXMLLoader.load(getClass().getResource("/Vista/VentanaRegistro.fxml"));
+            Scene sc = new Scene(p);
+            stage.setScene(sc);
+            stage.setTitle("Sistema de Turnos");
+            stage.show();
+        }catch(IOException e){
+            System.err.println(e);
+        }
     }
     
 }
