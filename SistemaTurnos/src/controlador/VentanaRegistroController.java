@@ -5,8 +5,10 @@
  */
 package controlador;
 
+import java.awt.Button;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 /**
@@ -15,7 +17,12 @@ import javafx.fxml.Initializable;
  * @author Noelia Intriago
  */
 public class VentanaRegistroController implements Initializable {
-
+    @FXML
+    Button medico;
+    Button paciente;
+    Button turno;
+    Button asignacion;
+    Button puesto;
     /**
      * Initializes the controller class.
      */
