@@ -5,12 +5,14 @@
  */
 package sistematurnos;
 
+import controlador.VentanaMedicoController;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import tda.Video;
 
 /**
  *
@@ -18,6 +20,8 @@ import javafx.stage.Stage;
  */
 public class SistemaTurnos extends Application{
     public static void main(String[] args) {
+        System.out.println(Video.leerArchivo("/resources/videos.txt"));
+        System.out.println(VentanaMedicoController.doctoresRegistrados);
         launch();
     }
 
