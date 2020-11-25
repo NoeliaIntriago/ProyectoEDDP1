@@ -73,12 +73,12 @@
             <Font name="Franklin Gothic Medium Cond" size="34.0" />
          </font>
       </Label>
-      <Button layoutX="253.0" layoutY="358.0" mnemonicParsing="false" styleClass="main-button" stylesheets="@css/estilos.css" text="Retroceder">
+      <Button layoutX="253.0" layoutY="358.0" mnemonicParsing="false" onAction="#regresar" styleClass="main-button" stylesheets="@css/estilos.css" text="Retroceder">
          <font>
             <Font name="Franklin Gothic Medium Cond" size="17.0" />
          </font>
       </Button>
-      <Button layoutX="365.0" layoutY="358.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="94.0" styleClass="main-button" stylesheets="@css/estilos.css" text="Guardar">
+      <Button layoutX="365.0" layoutY="358.0" mnemonicParsing="false" onAction="#crear" prefHeight="34.0" prefWidth="94.0" styleClass="main-button" stylesheets="@css/estilos.css" text="Guardar">
          <font>
             <Font name="Franklin Gothic Medium Cond" size="17.0" />
          </font>
