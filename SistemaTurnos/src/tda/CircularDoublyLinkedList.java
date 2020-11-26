@@ -20,7 +20,7 @@ public class CircularDoublyLinkedList<E> implements List<E> {
         private Node<E> next;
         
         public Node(E data){
-            this.data = data;
+            this.data = data;            
         }
     }
     

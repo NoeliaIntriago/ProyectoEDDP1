@@ -1,4 +1,17 @@
-vomito|1
+vómito|1
 fiebre|0
 resfrio|3
-congestion nasal|3
+congestión nasal|3
+tos|3
+dificultad para respirar|0
+dolor muscular|2
+dolor de garganta|5
+pérdida de olfato|1
+pérdida de gusto|1
+diarrea|4
+sangrado leve|3
+hemorragia|0
+sudoración|3
+comezón|5
+deshidratación|1
+mareo|5
