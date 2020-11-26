@@ -6,8 +6,12 @@
 package controlador;
 
 import java.net.URL;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import tda.CircularDoublyLinkedList;
 
 /**
  * FXML Controller class
@@ -20,8 +24,8 @@ public class VentanaTurnoController implements Initializable {
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+    public void initialize(URL url, ResourceBundle rb) {        
+        
+    }        
     
-}
+    }

@@ -5,6 +5,8 @@
  */
 package tda;
 
+import java.util.Iterator;
+
 /**
  *
  * @author Noelia Intriago
@@ -13,6 +15,10 @@ public class CircularDoublyLinkedList<E> implements List<E> {
     private Node<E> first;
     private Node<E> last;
     private int current;
+
+    public Iterator<String> iterator() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     private class Node<E>{
         private E data;
