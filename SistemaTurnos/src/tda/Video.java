@@ -5,45 +5,59 @@
  */
 package tda;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Iterator;
+import java.util.Scanner;
+import javafx.geometry.Insets;
+import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
+import tda.CircularDoublyLinkedList;
 
 /**
  *
- * @author Noelia Intriago
+ * @author Viviana Vera
  */
-public class Video {
-    private String url;
+
+public class Video{    
     
-    public Video(String url){
-        this.url = url;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    @Override
-    public String toString() {
-        return "Video{" + "url=" + url + '}';
-    }
+    MediaView view;    
+    private CircularDoublyLinkedList<Media> listaVideos;    
     
-    public static CircularDoublyLinkedList<Video> leerArchivo(String nombre){
-        CircularDoublyLinkedList<Video> videos = new CircularDoublyLinkedList<>();
-        try {
-            java.util.List<String> lineas = Files.readAllLines(Paths.get("src/resources/videos.txt"));
-            for (String linea : lineas) {
-                Video v = new Video(linea);
-                videos.addLast(v);
+    public Video() throws FileNotFoundException{ 
+        MediaView media = this.view;
+        listaVideos = cargarVideos();        
+    }
+   
+    public CircularDoublyLinkedList<Media> cargarVideos() throws FileNotFoundException{
+        CircularDoublyLinkedList<Media> listaVideos = new CircularDoublyLinkedList<>();
+        try{
+            Scanner sc = new Scanner(new File("videos.txt"));
+            while(sc.hasNextLine()){
+                String linea = sc.nextLine();                               
+                // System.out.println(linea);                
+                Media video = new Media(new File(linea).toURI().toString().strip());
+                listaVideos.addLast(video);
             }
-        } catch (IOException e) {
-            System.err.println("Archivo no encontrado\n"+e);
-        }
-        return videos;
+        }catch(FileNotFoundException e){
+            System.out.println("que no encuentra el archivo dice");
+        }        
+        return listaVideos;
     }
+    
+    public MediaView getMedia(){
+        return this.view;
+    }
+    
+        
+    //prueba
+    /*
+    public static void main(String[] args) throws FileNotFoundException {
+        
+    }*/
+    
 }

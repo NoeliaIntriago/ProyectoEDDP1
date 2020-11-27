@@ -19,8 +19,7 @@ import tda.Video;
  * @author Noelia Intriago
  */
 public class SistemaTurnos extends Application{
-    public static void main(String[] args) {
-        System.out.println(Video.leerArchivo("/resources/videos.txt"));
+    public static void main(String[] args) {        
         System.out.println(VentanaMedicoController.doctoresRegistrados);
         launch();
     }

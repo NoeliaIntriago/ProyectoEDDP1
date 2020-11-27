@@ -103,4 +103,6 @@ public class VentanaRegistroController implements Initializable {
             System.err.println(e);
         }
     }
+    
+    
 }
