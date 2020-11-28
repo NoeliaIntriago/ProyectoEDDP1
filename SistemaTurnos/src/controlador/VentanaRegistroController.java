@@ -12,12 +12,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.ImageCursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
@@ -28,17 +26,33 @@ import javafx.stage.Stage;
 public class VentanaRegistroController implements Initializable {
     @FXML
     Button medico;
+    @FXML
     Button paciente;
+    @FXML
     Button turno;
+    @FXML
     Button asignacion;
+    @FXML
     Button puesto;
+    
+    //
+    private VentanaRegistroController principal;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+        
+    }
+    
+    public VentanaRegistroController getPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(VentanaRegistroController principal) {
+        this.principal = principal;
+    }
+        
     public void crearPuesto(ActionEvent event){
         try{
             Parent root = FXMLLoader.load(getClass().getResource("/vista/VentanaPuestos.fxml"));
@@ -78,9 +92,9 @@ public class VentanaRegistroController implements Initializable {
         }
     }
     
-    public void verAsignaciones(ActionEvent event){
+    public void eliminarPuesto(ActionEvent event){
         try{
-            Parent root = FXMLLoader.load(getClass().getResource("/vista/VentanaAsignaciones.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/vista/VentanaEliminacion.fxml"));
             Scene scene = new Scene(root);
             Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             appStage.setScene(scene);
@@ -90,19 +104,4 @@ public class VentanaRegistroController implements Initializable {
             System.err.println(e);
         }
     }
-    
-    public void verTurnos(ActionEvent event){
-        try{
-            Parent root = FXMLLoader.load(getClass().getResource("/vista/VentanaTurno.fxml"));
-            Scene scene = new Scene(root);
-            Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            appStage.setScene(scene);
-            appStage.toFront();
-            appStage.show();
-        }catch(IOException e){
-            System.err.println(e);
-        }
-    }
-    
-    
 }

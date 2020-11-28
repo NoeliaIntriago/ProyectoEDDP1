@@ -13,6 +13,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,11 +27,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import sistematurnos.SistemaTurnos;
-import tda.Medico;
+import tda.Generador;
 import tda.Paciente;
+import tda.Sintoma;
+import tda.Turno;
 
 /**
  * FXML Controller class
@@ -37,7 +42,9 @@ import tda.Paciente;
  * @author DELL
  */
 public class VentanaPacienteController implements Initializable {
+    private VentanaTurnoController principal = new VentanaTurnoController();
     public static ArrayList<Paciente> pacientesRegistrados = new ArrayList<>();
+    public static Queue<Turno> turnosCreados = new LinkedList<>();
     @FXML
     private Button atras;
     @FXML
@@ -49,29 +56,44 @@ public class VentanaPacienteController implements Initializable {
     @FXML
     private TextField edad;
     @FXML
-    private TextField genero;
+    private ComboBox<String> genero;
     @FXML
-    private TextField sintoma;
+    private ComboBox<Sintoma> sintoma;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        genero.getItems().setAll((new String[]{"Femenino", "Masculino"}));
+        LinkedList<Sintoma> sintomas = Sintoma.leerSintomas("/src/resources/sintomas.txt");
+        sintoma.getItems().setAll(sintomas);
     }    
+
+    public VentanaTurnoController getPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(VentanaTurnoController principal) {
+        this.principal = principal;
+    }
     
     public void crear(ActionEvent event){
         String[] lnombres = nombres.getText().split(" ");
         String[] lapellidos = apellidos.getText().split(" ");
-        if(lnombres.length != 2 || lapellidos.length != 2 || edad.getText().isBlank() || genero.getText().isBlank() || sintoma.getText().isBlank()){
+        if(lnombres.length != 2 || lapellidos.length != 2 || edad.getText().isBlank()){
             mostrarAlerta("Por favor, rellene correctamente los campos. \n2 nombres\n2 apellidos \nEdad (en números)", Alert.AlertType.ERROR);
         }else{
-            Paciente p = new Paciente(lnombres[0], lnombres[1], lapellidos[0], lapellidos[1], Integer.parseInt(edad.getText()), genero.getText(), sintoma.getText());
+            Paciente p = new Paciente(lnombres[0], lnombres[1], lapellidos[0], lapellidos[1], Integer.parseInt(edad.getText()), genero.getValue(), sintoma.getValue());
             if(!pacientesRegistrados.contains(p)){
                 pacientesRegistrados.add(p);
+                Turno t = Generador.generarTurnoConPaciente(p);
+                turnosCreados.offer(t);
+                principal.asignarPuestoATurno();
+                System.out.println("Turnos creados: "+turnosCreados);
             }else{
                 mostrarAlerta("El usuario ya se encuentra registrado!", Alert.AlertType.ERROR);
             }
         }
         
+        vaciarInputsPacientes();
     }
     
     public void mostrarAlerta(String mensaje, Alert.AlertType e){
@@ -94,6 +116,14 @@ public class VentanaPacienteController implements Initializable {
         } catch (IOException ex) {
             System.err.println("No se pudo crear la ventana");
         }
+    }
+    
+    public void vaciarInputsPacientes() {
+        nombres.setText("");
+        apellidos.setText("");
+        edad.setText("");
+        sintoma.setValue(null);
+        genero.setValue(null);
     }
     
     public static void serializar(){
@@ -119,4 +149,12 @@ public class VentanaPacienteController implements Initializable {
             Logger.getLogger(SistemaTurnos.class.getName()).log(Level.SEVERE, null, ex);
         }  
     } 
+
+    public static Queue<Turno> getTurnosCreados() {
+        return turnosCreados;
+    }
+
+    public static void setTurnosCreados(Queue<Turno> turnosCreados) {
+        VentanaPacienteController.turnosCreados = turnosCreados;
+    }
 }

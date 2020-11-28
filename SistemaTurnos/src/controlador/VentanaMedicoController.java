@@ -13,6 +13,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,6 +26,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import sistematurnos.SistemaTurnos;
@@ -36,7 +38,7 @@ import tda.Medico;
  * @author DELL
  */
 public class VentanaMedicoController implements Initializable {
-    public static ArrayList<Medico> doctoresRegistrados = new ArrayList<>();
+    public static LinkedList<Medico> doctoresRegistrados = new LinkedList<>();
     @FXML
     private Button atras;
     @FXML
@@ -46,26 +48,27 @@ public class VentanaMedicoController implements Initializable {
     @FXML
     private TextField apellidos;
     @FXML
-    private TextField especialidad;
+    private ComboBox<String> especialidad;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        especialidad.getItems().setAll((new String[]{"Medicina General", "Alergología", "Cardiología", "Angiología", "Cirugía General", "Dermatología", "Endocrinología", "Ecografía", "Hematología"}));
     }    
     
     public void crear(ActionEvent event){
         String[] lnombres = nombres.getText().split(" ");
         String[] lapellidos = apellidos.getText().split(" ");
-        if(lnombres.length != 2 || lapellidos.length != 2 || especialidad.getText().isBlank()){
+        if(lnombres.length != 2 || lapellidos.length != 2){
             mostrarAlerta("Por favor, rellene correctamente los campos. \n2 nombres \n2 apellidos \n1 especialidad", Alert.AlertType.ERROR);
         }else{
-            Medico m = new Medico(lnombres[0], lnombres[1], lapellidos[0], lapellidos[1], especialidad.getText());
+            Medico m = new Medico(lnombres[0], lnombres[1], lapellidos[0], lapellidos[1], especialidad.getValue());
             if(!doctoresRegistrados.contains(m)){
                 doctoresRegistrados.add(m);
             }else{
                 mostrarAlerta("El doctor ya se encuentra registrado!", Alert.AlertType.ERROR);
             }
-        } 
+        }
+        vaciarInputsMedicos();
     }
     
     public void mostrarAlerta(String mensaje, Alert.AlertType e){
@@ -90,6 +93,12 @@ public class VentanaMedicoController implements Initializable {
         }
     } 
     
+    public void vaciarInputsMedicos() {
+        nombres.setText("");
+        apellidos.setText("");
+        especialidad.setValue(null);
+    }
+    
     public static void serializar(){
         try(ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("src/resources/medicos.dat"))){
             os.writeObject(doctoresRegistrados);
@@ -102,7 +111,7 @@ public class VentanaMedicoController implements Initializable {
     
     public static void deserializar(){
         try(ObjectInputStream is = new ObjectInputStream(new FileInputStream("src/recursos/medicos.dat"))){   
-            doctoresRegistrados = (ArrayList<Medico>)is.readObject();
+            doctoresRegistrados = (LinkedList<Medico>)is.readObject();
             System.out.println("Proceso de deserializacion culminado con exito");
             is.close();
         }catch(FileNotFoundException ex){
@@ -114,4 +123,3 @@ public class VentanaMedicoController implements Initializable {
         }  
     }  
 }
-//F
