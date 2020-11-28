@@ -5,19 +5,19 @@
  */
 package tda;
 
+import java.io.Serializable;
+
 /**
  *
- * @author pc-4k
+ * @author Noelia Intriago
  */
-public class Puesto {
+public class Puesto implements Serializable{
+    private int numero;
+    private Medico medicoAsignado;
     
-    private int numero; 
-    private String medico;
-    
-    
-    public Puesto(int numero, String medico) {
+    public Puesto(int numero, Medico medicoAsignado){
         this.numero = numero;
-        this.medico = medico;
+        this.medicoAsignado = medicoAsignado;
     }
 
     public int getNumero() {
@@ -28,20 +28,16 @@ public class Puesto {
         this.numero = numero;
     }
 
-    public String getMedico() {
-        return medico;
+    public Medico getMedicoAsignado() {
+        return medicoAsignado;
     }
 
-    public void setMedico(String medico) {
-        this.medico = medico;
+    public void setMedicoAsignado(Medico medicoAsignado) {
+        this.medicoAsignado = medicoAsignado;
     }
-    
+
     @Override
-    public String toString(){
-        return "[ Puesto # "+numero+" - Médico: "+medico+" ]";
+    public String toString() {
+        return "Puesto: "+ numero + ", Médico asignado: " + medicoAsignado;
     }
-
-    
-    
-    
 }

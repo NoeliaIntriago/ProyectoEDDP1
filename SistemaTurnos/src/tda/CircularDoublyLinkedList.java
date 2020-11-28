@@ -11,14 +11,10 @@ import java.util.Iterator;
  *
  * @author Noelia Intriago
  */
-public class CircularDoublyLinkedList<E> implements List<E> {
+public class CircularDoublyLinkedList<E> implements List<E>, Iterable<E> {
     private Node<E> first;
     private Node<E> last;
     private int current;
-
-    public Iterator<String> iterator() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
     private class Node<E>{
         private E data;
@@ -26,8 +22,32 @@ public class CircularDoublyLinkedList<E> implements List<E> {
         private Node<E> next;
         
         public Node(E data){
-            this.data = data;            
+            this.data = data;
         }
+    }
+    
+    @Override
+    public Iterator<E> iterator() {
+        if (isEmpty()) {
+            throw new IllegalStateException("Lista vacia");
+        }
+        Iterator<E> it = new Iterator<E>() {
+            Node<E> p = last.next;
+
+            @Override
+            public boolean hasNext() {
+                return p != null;
+            }
+
+            @Override
+            public E next() {
+                E temp = p.data;
+                p = p.next;
+                return temp;
+            }
+
+        };
+        return it;
     }
     
     @Override

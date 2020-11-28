@@ -5,74 +5,58 @@
  */
 package tda;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.LinkedList;
-import java.util.Scanner;
 
 /**
  *
- * @author pc-4k
+ * @author Noelia Intriago
  */
-public class Sintoma {
-    private String nombre;
-    private int prioridad;
-    
-    public Sintoma(){
-        nombre =null;
-        prioridad=Integer.MIN_VALUE;
-    }
-    
-    public Sintoma(String nombre, int prioridad){
-        this.nombre= nombre;
-        this.prioridad=prioridad;
-    }
-    
-    public String getNombre() {
-        return nombre;
-    }
+public class Sintoma implements Serializable{
+    private String descripcion;
+    private Integer prioridad;
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public int getPrioridad() {
-        return prioridad;
-    }
-    
-    public void setPrioridad(int prioridad){
+    public Sintoma(String descripcion, Integer prioridad) {
+        this.descripcion = descripcion;
         this.prioridad = prioridad;
     }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public Integer getPrioridad() {
+        return prioridad;
+    }
+
+    public void setPrioriodad(Integer prioridad) {
+        this.prioridad = prioridad;
+    }
+
+    @Override
+    public String toString() {
+        return descripcion;
+    }
     
-    public static LinkedList<Sintoma> obtenerSintomas(String archivo) throws FileNotFoundException{
+    public static LinkedList<Sintoma> leerSintomas(String nombre){
         LinkedList<Sintoma> sintomas = new LinkedList<>();
-        try{
-            Scanner sc = new Scanner(new File(archivo));
-            while(sc.hasNextLine()){
-                String linea = sc.nextLine();                
-                String[] arrayLineas = linea.split("\\|");
-                // System.out.println(arrayLineas[1]+"-----" + arrayLineas[0]);
-                Sintoma x = new Sintoma(arrayLineas[0], Integer.parseInt(arrayLineas[1]));
-                sintomas.add(x);
+        try {
+            java.util.List<String> lineas = Files.readAllLines(Paths.get("src/resources/sintomas.txt"));
+            for (String linea : lineas) {
+                String[] tokens = linea.split("\\|");
+                Sintoma s = new Sintoma(tokens[0], Integer.parseInt(tokens[1]));
+                sintomas.add(s);
             }
-        }catch(FileNotFoundException e){
-            System.out.println(e.getMessage());
+        } catch (IOException e) {
+            System.err.println("Archivo no encontrado\n"+e);
         }
         return sintomas;
     }
-    
-    @Override
-    
-    public String toString(){
-        return "Sintoma [" + nombre+"] | Prioridad ["+prioridad+"]";
-    }
-    
-    // para probar no mas xd
-    /*
-    public static void main (String [] args) throws FileNotFoundException{
-        System.out.println(obtenerSintomas("sintomas.txt"));
-    
-        si funciona :D
-    }
-    */
 }

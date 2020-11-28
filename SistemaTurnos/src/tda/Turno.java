@@ -5,44 +5,29 @@
  */
 package tda;
 
-import java.util.LinkedList;
+import java.util.Map;
 
 /**
  *
- * @author Viviana Vera
+ * @author Noelia Intriago
  */
 public class Turno {
-    
-    private String codigo;
-    private Puesto puesto;
     private Paciente paciente;
-    
-    public Turno(){     
-        codigo = null;
-        puesto = null;
-        paciente = null;
-    }
-    
-    public Turno(Puesto puesto, Paciente p){
-        //this.codigo = generarCodigo;
-        this.puesto = puesto;
+    private String turno;
+    private static Map<Integer,String> asignacion;
+
+    public Turno(Paciente paciente, String turno) {
         this.paciente = paciente;
+        this.turno = turno;
     }
-
-    public String getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
-    }
-
-    public Puesto getPuesto() {
-        return puesto;
-    }
-
-    public void setPuesto(Puesto puesto) {
-        this.puesto = puesto;
+    
+    /**
+     * 
+     * @param prioridad int
+     * @return String
+     */
+    public static String getLetraPrioridad(int prioridad){
+        return asignacion.get(prioridad);
     }
 
     public Paciente getPaciente() {
@@ -52,18 +37,19 @@ public class Turno {
     public void setPaciente(Paciente paciente) {
         this.paciente = paciente;
     }
-    
-    public String generarCodigo(Paciente p){
-        String s = p.getSintoma();
-        LinkedList<String> alfabeto = new LinkedList<>();
-        
-        return "";
+
+    public String getTurno() {
+        return turno;
     }
-    
-    
+
+    public void setTurno(String turno) {
+        this.turno = turno;
+    }
+
     @Override
-    public String toString(){
-        return codigo;
+    public String toString() {
+        return "Turno{" + "paciente=" + paciente + ", turno=" + turno + '}';
     }
+    
     
 }

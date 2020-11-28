@@ -5,20 +5,22 @@
  */
 package tda;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Noelia Intriago
  */
-public class Paciente {
+public class Paciente implements Serializable{
     private String primerNombre;
     private String segundoNombre;
     private String apellidoPaterno;
     private String apellidoMaterno;
     private int edad;
     private String genero;
-    private String sintoma;
+    private Sintoma sintoma;
 
-    public Paciente(String primerNombre, String segundoNombre, String apellidoPaterno, String apellidoMaterno, int edad, String genero, String sintoma) {
+    public Paciente(String primerNombre, String segundoNombre, String apellidoPaterno, String apellidoMaterno, int edad, String genero, Sintoma sintoma) {
         this.primerNombre = primerNombre;
         this.segundoNombre = segundoNombre;
         this.apellidoPaterno = apellidoPaterno;
@@ -76,11 +78,11 @@ public class Paciente {
         this.genero = genero;
     }
 
-    public String getSintoma() {
+    public Sintoma getSintoma() {
         return sintoma;
     }
 
-    public void setSintoma(String sintoma) {
+    public void setSintoma(Sintoma sintoma) {
         this.sintoma = sintoma;
     }
 

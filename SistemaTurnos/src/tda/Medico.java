@@ -5,11 +5,13 @@
  */
 package tda;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Noelia Intriago
  */
-public class Medico {
+public class Medico implements Serializable{
     private String primerNombre;
     private String segundoNombre;
     private String apellidoPaterno;
@@ -66,6 +68,6 @@ public class Medico {
 
     @Override
     public String toString() {
-        return "Medico{" + "primerNombre=" + primerNombre + ", segundoNombre=" + segundoNombre + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", especialidad=" + especialidad + '}';
+        return primerNombre + " " + segundoNombre + " " + apellidoPaterno + " " + apellidoMaterno + ". Especialidad: " + especialidad;
     }
 }
