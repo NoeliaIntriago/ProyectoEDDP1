@@ -19,27 +19,17 @@
             <Image url="@../resources/fotos/menu%20principal.jpeg" />
          </image>
       </ImageView>
-      <Button layoutX="349.0" layoutY="192.0" mnemonicParsing="false" onAction="#crearPuesto" prefHeight="43.0" prefWidth="219.0" styleClass="main-button" stylesheets="@css/estilos.css" text="PUESTOS">
+      <Button layoutX="349.0" layoutY="342.0" mnemonicParsing="false" onAction="#crearPuesto" prefHeight="43.0" prefWidth="219.0" styleClass="main-button" stylesheets="@css/estilos.css" text="CREAR PUESTOS">
          <font>
             <Font name="Franklin Gothic Medium Cond" size="18.0" />
          </font>
       </Button>
-      <Button layoutX="349.0" layoutY="253.0" mnemonicParsing="false" onAction="#crearMedico" prefHeight="43.0" prefWidth="219.0" styleClass="main-button" stylesheets="@css/estilos.css" text="MEDICOS">
+      <Button layoutX="349.0" layoutY="219.0" mnemonicParsing="false" onAction="#crearMedico" prefHeight="43.0" prefWidth="219.0" styleClass="main-button" stylesheets="@css/estilos.css" text="REGISTRAR MEDICOS">
          <font>
             <Font name="Franklin Gothic Medium Cond" size="18.0" />
          </font>
       </Button>
-      <Button layoutX="349.0" layoutY="314.0" mnemonicParsing="false" onAction="#crearPaciente" prefHeight="43.0" prefWidth="219.0" styleClass="main-button" stylesheets="@css/estilos.css" text="PACIENTES">
-         <font>
-            <Font name="Franklin Gothic Medium Cond" size="18.0" />
-         </font>
-      </Button>
-      <Button layoutX="349.0" layoutY="372.0" mnemonicParsing="false" onAction="#verAsignaciones" prefHeight="43.0" prefWidth="219.0" styleClass="main-button" stylesheets="@css/estilos.css" text="ASIGNACIONES">
-         <font>
-            <Font name="Franklin Gothic Medium Cond" size="18.0" />
-         </font>
-      </Button>
-      <Button layoutX="349.0" layoutY="432.0" mnemonicParsing="false" onAction="#verTurnos" prefHeight="43.0" prefWidth="219.0" styleClass="main-button" stylesheets="@css/estilos.css" text="VER TURNOS">
+      <Button layoutX="349.0" layoutY="281.0" mnemonicParsing="false" onAction="#crearPaciente" prefHeight="43.0" prefWidth="219.0" styleClass="main-button" stylesheets="@css/estilos.css" text="REGISTRAR PACIENTES">
          <font>
             <Font name="Franklin Gothic Medium Cond" size="18.0" />
          </font>
@@ -49,5 +39,10 @@
             <Font name="Franklin Gothic Medium Cond" size="25.0" />
          </font>
       </Label>
+      <Button layoutX="349.0" layoutY="401.0" mnemonicParsing="false" onAction="#eliminarPuesto" prefHeight="43.0" prefWidth="219.0" styleClass="main-button" stylesheets="@css/estilos.css" text="ELIMINAR PUESTOS">
+         <font>
+            <Font name="Franklin Gothic Medium Cond" size="18.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

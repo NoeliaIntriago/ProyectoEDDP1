@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="781.0" prefWidth="782.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="controlador.VentanaEliminacionController">
+   <children>
+      <ImageView fitHeight="781.0" fitWidth="845.0" layoutX="-2.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/fotos/menu%20principal.jpeg" />
+         </image>
+      </ImageView>
+      <Label layoutX="363.0" layoutY="150.0" prefHeight="51.0" prefWidth="219.0" styleClass="write-button" stylesheets="@css/estilos.css" text="ELIMINAR PUESTO" textFill="#1640aa">
+         <font>
+            <Font name="Franklin Gothic Medium Cond" size="25.0" />
+         </font>
+      </Label>
+      <GridPane layoutX="344.0" layoutY="247.0" prefHeight="30.0" prefWidth="219.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Puesto:" textFill="#1640aa">
+               <font>
+                  <Font name="Franklin Gothic Medium Cond" size="24.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="puesto" prefWidth="150.0" GridPane.columnIndex="1" />
+         </children>
+      </GridPane>
+      <Button layoutX="313.0" layoutY="362.0" mnemonicParsing="false" onAction="#regresar" prefHeight="43.0" prefWidth="132.0" styleClass="main-button" stylesheets="@css/estilos.css" text="RETROCEDER">
+         <font>
+            <Font name="Franklin Gothic Medium Cond" size="18.0" />
+         </font>
+      </Button>
+      <Button layoutX="480.0" layoutY="362.0" mnemonicParsing="false" onAction="#eliminar" prefHeight="43.0" prefWidth="132.0" styleClass="main-button" stylesheets="@css/estilos.css" text="ELIMINAR">
+         <font>
+            <Font name="Franklin Gothic Medium Cond" size="18.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
