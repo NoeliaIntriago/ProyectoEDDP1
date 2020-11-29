@@ -21,6 +21,7 @@ import javafx.stage.Stage;
  * @author Noelia Intriago
  */
 public class SistemaTurnos extends Application{
+    private VentanaTurnoController vt; 
 
     /**
      * @param args the command line arguments
@@ -40,11 +41,13 @@ public class SistemaTurnos extends Application{
     @Override
     public void start(Stage stage){
         try{
-            Parent p = FXMLLoader.load(getClass().getResource("/vista/VentanaTurno.fxml"));
+            Parent p = FXMLLoader.load(getClass().getResource("/vista/VentanaRegistro.fxml"));
             Scene sc = new Scene(p);
             stage.setScene(sc);
             stage.setTitle("Sistema de Turnos");
             stage.show();
+
+            
         }catch(IOException e){
             System.err.println(e);
         }
