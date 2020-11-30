@@ -44,7 +44,7 @@ import tda.Turno;
 public class VentanaPacienteController implements Initializable {
     private VentanaTurnoController principal = new VentanaTurnoController();
     public static ArrayList<Paciente> pacientesRegistrados = new ArrayList<>();
-    public static Queue<Turno> turnosCreados = new LinkedList<>();
+    public static LinkedList<Turno> turnosCreados = new LinkedList<>();
     @FXML
     private Button atras;
     @FXML
@@ -78,15 +78,21 @@ public class VentanaPacienteController implements Initializable {
     public void crear(ActionEvent event){
         String[] lnombres = nombres.getText().split(" ");
         String[] lapellidos = apellidos.getText().split(" ");
+        String laedad = edad.getText();        
+        
         if(lnombres.length != 2 || lapellidos.length != 2 || edad.getText().isBlank()){
             mostrarAlerta("Por favor, rellene correctamente los campos. \n2 nombres\n2 apellidos \nEdad (en números)", Alert.AlertType.ERROR);
-        }else{
+        }else if(laedad.length()>2){
+            mostrarAlerta("Por favor ingrese una edad válida", Alert.AlertType.ERROR);            
+        }else if(Character.isDigit(laedad.charAt(0))==false){
+            mostrarAlerta("Por favor, ingrese un dato numérico. No alfanumérico. No palabras.", Alert.AlertType.ERROR);            
+        }
+        else{
             Paciente p = new Paciente(lnombres[0], lnombres[1], lapellidos[0], lapellidos[1], Integer.parseInt(edad.getText()), genero.getValue(), sintoma.getValue());
             if(!pacientesRegistrados.contains(p)){
                 pacientesRegistrados.add(p);
                 Turno t = Generador.generarTurnoConPaciente(p);
-                turnosCreados.offer(t);
-                principal.asignarPuestoATurno();
+                turnosCreados.add(t);
                 System.out.println("Turnos creados: "+turnosCreados);
             }else{
                 mostrarAlerta("El usuario ya se encuentra registrado!", Alert.AlertType.ERROR);
@@ -117,6 +123,8 @@ public class VentanaPacienteController implements Initializable {
             System.err.println("No se pudo crear la ventana");
         }
     }
+    
+    
     
     public void vaciarInputsPacientes() {
         nombres.setText("");
@@ -150,11 +158,4 @@ public class VentanaPacienteController implements Initializable {
         }  
     } 
 
-    public static Queue<Turno> getTurnosCreados() {
-        return turnosCreados;
-    }
-
-    public static void setTurnosCreados(Queue<Turno> turnosCreados) {
-        VentanaPacienteController.turnosCreados = turnosCreados;
-    }
 }

@@ -17,6 +17,8 @@ public class Medico implements Serializable{
     private String apellidoPaterno;
     private String apellidoMaterno;
     private String especialidad;
+    private Puesto puesto;
+
 
     public Medico(String primerNombre, String segundoNombre, String apellidoPaterno, String apellidoMaterno, String especialidad) {
         this.primerNombre = primerNombre;
@@ -64,6 +66,14 @@ public class Medico implements Serializable{
 
     public void setEspecialidad(String especialidad) {
         this.especialidad = especialidad;
+    }
+    
+    public Puesto getPuesto() {
+        return puesto;
+    }
+
+    public void setPuesto(Puesto puesto) {
+        this.puesto = puesto;
     }
 
     @Override

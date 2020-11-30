@@ -35,22 +35,16 @@ public class VentanaRegistroController implements Initializable {
     @FXML
     Button puesto;
     
-    //
     private VentanaRegistroController principal;
     /**
      * Initializes the controller class.
      */
+    
+    
+   
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-    }
-    
-    public VentanaRegistroController getPrincipal() {
-        return principal;
-    }
-
-    public void setPrincipal(VentanaRegistroController principal) {
-        this.principal = principal;
     }
         
     public void crearPuesto(ActionEvent event){
@@ -104,4 +98,13 @@ public class VentanaRegistroController implements Initializable {
             System.err.println(e);
         }
     }
+
+    public VentanaRegistroController getPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(VentanaRegistroController principal) {
+        this.principal = principal;
+    }
+    
 }

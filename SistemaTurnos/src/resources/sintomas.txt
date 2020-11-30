@@ -1,7 +1,7 @@
-vómito|1
+vomito|1
 fiebre|0
 resfrio|3
-congestión nasal|3
+congestion nasal|3
 tos|3
 dificultad para respirar|0
 dolor muscular|2

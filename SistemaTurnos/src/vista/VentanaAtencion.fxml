@@ -1,11 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentanaAtencionController">
-    
+<AnchorPane id="AnchorPane" prefHeight="349.0" prefWidth="604.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentanaAtencionController">
+   <children>
+      <ImageView fitHeight="350.0" fitWidth="636.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/fotos/pantalla-turnos.jpg" />
+         </image>
+      </ImageView>
+      <Label layoutX="223.0" layoutY="14.0" text="Nombres:">
+         <font>
+            <Font name="Franklin Gothic Demi Cond" size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtNombres" layoutX="303.0" layoutY="13.0" prefHeight="25.0" prefWidth="286.0" />
+      <Label layoutX="222.0" layoutY="50.0" text="Apellidos:">
+         <font>
+            <Font name="Franklin Gothic Demi Cond" size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtApellidos" layoutX="303.0" layoutY="48.0" prefHeight="25.0" prefWidth="286.0" />
+      <Label layoutX="14.0" layoutY="86.0" text="Edad:">
+         <font>
+            <Font name="Franklin Gothic Demi Cond" size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtEdad" layoutX="63.0" layoutY="85.0" prefHeight="25.0" prefWidth="39.0" />
+      <Label layoutX="124.0" layoutY="86.0" text="Género:">
+         <font>
+            <Font name="Franklin Gothic Demi Cond" size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtGenero" layoutX="186.0" layoutY="85.0" prefHeight="25.0" prefWidth="103.0" />
+      <Label layoutX="311.0" layoutY="86.0" text="Síntoma:">
+         <font>
+            <Font name="Franklin Gothic Demi Cond" size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtSintoma" layoutX="383.0" layoutY="85.0" prefHeight="25.0" prefWidth="206.0" />
+      <Label layoutX="14.0" layoutY="133.0" text="Diagnóstico:">
+         <font>
+            <Font name="Franklin Gothic Demi Cond" size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtDiagnostico" layoutX="112.0" layoutY="132.0" prefHeight="69.0" prefWidth="476.0" />
+      <Label layoutX="14.0" layoutY="212.0" text="Receta:">
+         <font>
+            <Font name="Franklin Gothic Demi Cond" size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtReceta" layoutX="112.0" layoutY="212.0" prefHeight="69.0" prefWidth="476.0" />
+      <Button fx:id="btnConfirmar" layoutX="460.0" layoutY="292.0" mnemonicParsing="false" onAction="#guardarDatos" prefHeight="43.0" prefWidth="124.0" styleClass="main-button" stylesheets="@css/estilos.css" text="Confirmar">
+         <font>
+            <Font name="Franklin Gothic Demi Cond" size="20.0" />
+         </font></Button>
+   </children>
 </AnchorPane>

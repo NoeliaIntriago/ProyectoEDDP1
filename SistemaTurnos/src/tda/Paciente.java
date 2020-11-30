@@ -5,7 +5,13 @@
  */
 package tda;
 
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -89,5 +95,17 @@ public class Paciente implements Serializable{
     @Override
     public String toString() {
         return "Paciente{" + "primerNombre=" + primerNombre + ", segundoNombre=" + segundoNombre + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", edad=" + edad + ", genero=" + genero + ", sintoma=" + sintoma + '}';
+    }
+     public void guardarPaciente(){
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter("pacientes.txt",true))){
+            bw.write(this.getPrimerNombre()+"|"+this.getSegundoNombre()+"|"+this.getApellidoPaterno()+"|"
+                    +this.getApellidoMaterno()+"|"+
+                    "|"+this.getGenero()+"|"+this.getEdad()+
+                    "|"+this.getSintoma().getDescripcion()+"\n");
+        }catch (FileNotFoundException ex) {
+            Logger.getLogger(Paciente.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Paciente.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

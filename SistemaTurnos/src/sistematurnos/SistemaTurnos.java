@@ -5,11 +5,14 @@
  */
 package sistematurnos;
 
+
 import controlador.VentanaMedicoController;
 import controlador.VentanaPacienteController;
 import controlador.VentanaPuestosController;
 import controlador.VentanaTurnoController;
 import java.io.IOException;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -26,27 +29,29 @@ public class SistemaTurnos extends Application{
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        launch();
-        System.out.println(VentanaMedicoController.doctoresRegistrados);
-        System.out.println(VentanaPacienteController.pacientesRegistrados);
-        System.out.println(VentanaPuestosController.puestosCreados);
-        System.out.println(VentanaTurnoController.getSingleInstance().puestosLibres);
-        System.out.println(VentanaTurnoController.getSingleInstance().getUrls());
-        System.out.println(VentanaTurnoController.getSingleInstance().getTurnosAsignados());
-        System.out.println(VentanaPacienteController.getTurnosCreados());
-        System.out.println(VentanaTurnoController.getSingleInstance().turnosOriginados);
+        VentanaMedicoController.deserializar();
+        VentanaPacienteController.deserializar();
+        VentanaPuestosController.deserializar();
+        Application.launch(args);
+        VentanaMedicoController.serializar();
+        VentanaPacienteController.serializar();
+        VentanaPuestosController.serializar();
     }
 
     @Override
     public void start(Stage stage){
         try{
-            Parent p = FXMLLoader.load(getClass().getResource("/vista/VentanaTurno.fxml"));
-            Scene sc = new Scene(p);
-            stage.setScene(sc);
-            stage.setTitle("Sistema de Turnos");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VentanaTurno.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene (root);
+            stage.setScene(scene);
             stage.show();
-        }catch(IOException e){
-            System.err.println(e);
+            
+        
+        }catch(IOException ex){
+            Logger.getLogger(SistemaTurnos.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        
     }
 }

@@ -54,6 +54,7 @@ public class VentanaEliminacionController implements Initializable {
             mostrarAlerta("Seleccione el puesto a eliminar", Alert.AlertType.ERROR);
         }
         Puesto p = (Puesto) puesto.getValue();
+        VentanaMedicoController.doctoresRegistrados.add(p.getMedicoAsignado());
         VentanaPuestosController.puestosCreados.remove(p);
         vaciarInputPuestos();
     }
@@ -67,6 +68,6 @@ public class VentanaEliminacionController implements Initializable {
     }
     
     public void vaciarInputPuestos(){
-        puesto.setValue(null);
+        puesto.getItems().setAll(VentanaPuestosController.puestosCreados);
     }
 }

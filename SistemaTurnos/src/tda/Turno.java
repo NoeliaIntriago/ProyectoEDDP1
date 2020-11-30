@@ -48,7 +48,7 @@ public class Turno {
 
     @Override
     public String toString() {
-        return "Turno{" + "paciente=" + paciente + ", turno=" + turno + '}';
+        return turno;
     }
     
     

@@ -5,28 +5,27 @@
  */
 package controlador;
 
-import static controlador.VentanaPacienteController.turnosCreados;
-import java.io.File;
-import java.io.FileInputStream;
+
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -48,28 +47,47 @@ public class VentanaTurnoController implements Initializable {
     @FXML
     private MediaView video;
     @FXML
-    private TableView<Turno> turnos;
+    public TableView<TurnoPuesto> turnos;
     @FXML
-    private TableColumn<String, Turno> colTurno;
+    private TableColumn<String, TurnoPuesto> numeros;
     @FXML
-    private TableColumn<Integer, Turno> colPuesto;
+    private TableColumn<Integer, TurnoPuesto> puestos;
     
+    public static TurnoPuesto select;
     private static VentanaTurnoController singleInstance;
-    private ObservableList<Turno> tableList;
+    private ObservableList<TurnoPuesto> tableList;
     public Queue<Puesto> puestosLibres;
-    public Queue<Turno> turnosOriginados;
-    private PriorityQueue<Turno> turnosAsignados;
+    public Queue<Turno> turnosAsignados;
     private VentanaAtencionController pantallaAternderPaciente;
     
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        iniciarRegistroView();
-        asignarPuestoATurno();
-        //initMediaPlayer(video, urlsVideos); 
-    }    
+    public void initialize(URL url, ResourceBundle rb) {  
+        numeros.setCellValueFactory(new PropertyValueFactory("Turno"));
+        puestos.setCellValueFactory(new PropertyValueFactory("Puesto"));
 
-    public VentanaRegistroController getrController() {
-        return rController;
+        initMediaPlayer(video, urlsVideos); 
+    }    
+    
+    public VentanaTurnoController() {
+        singleInstance = this;
+        tableList = FXCollections.observableArrayList();
+        puestosLibres = new LinkedList<>();
+        turnosAsignados = new PriorityQueue<>((Turno t1, Turno t2) -> t1.getPaciente().getSintoma().getPrioridad() - t2.getPaciente().getSintoma().getPrioridad());
+        iniciarRegistroView();
+        iniciarPuestosVacios();
+    }
+    
+    public TableView<TurnoPuesto> getTurnos() {
+        return turnos;
+    }
+
+    public void setTurnos(TableView<TurnoPuesto> turnos) {
+        this.turnos = turnos;
+    }
+       
+    
+    public VentanaTurnoController getrController() {
+        return singleInstance;
     }
 
     public void setrController(VentanaRegistroController rController) {
@@ -84,28 +102,28 @@ public class VentanaTurnoController implements Initializable {
         this.video = video;
     }
 
-    public TableView getTurnos() {
-        return turnos;
+    public Queue<Turno> getTurnosAsignados() {
+        return turnosAsignados;
     }
 
-    public void setTurnos(TableView turnos) {
-        this.turnos = turnos;
+    public void setTurnos(Queue<Turno> turnosAsignados) {
+        this.turnosAsignados = turnosAsignados;
     }
 
-    public TableColumn<String, Turno> getColTurno() {
-        return colTurno;
+    public TableColumn<String, TurnoPuesto> getNumeros() {
+        return numeros;
     }
 
-    public void setColTurno(TableColumn<String, Turno> colTurno) {
-        this.colTurno = colTurno;
+    public void setNumeros(TableColumn<String, TurnoPuesto> numeros) {
+        this.numeros = numeros;
     }
 
-    public TableColumn<Integer, Turno> getColPuesto() {
-        return colPuesto;
+    public TableColumn<Integer, TurnoPuesto> getPuestos() {
+        return puestos;
     }
 
-    public void setColPuesto(TableColumn<Integer, Turno> colPuesto) {
-        this.colPuesto = colPuesto;
+    public void setPuestos(TableColumn<Integer, TurnoPuesto> puestos) {
+        this.puestos = puestos;
     }
 
     public static VentanaTurnoController getSingleInstance() {
@@ -116,11 +134,11 @@ public class VentanaTurnoController implements Initializable {
         VentanaTurnoController.singleInstance = singleInstance;
     }
 
-    public ObservableList<Turno> getTableList() {
+    public ObservableList<TurnoPuesto> getTableList() {
         return tableList;
     }
 
-    public void setTableList(ObservableList<Turno> tableList) {
+    public void setTableList(ObservableList<TurnoPuesto> tableList) {
         this.tableList = tableList;
     }
 
@@ -130,10 +148,6 @@ public class VentanaTurnoController implements Initializable {
 
     public void setPuestosLibres(Queue<Puesto> puestosLibres) {
         this.puestosLibres = puestosLibres;
-    }
-
-    public PriorityQueue<Turno> getTurnosAsignados() {
-        return turnosAsignados;
     }
 
     public void setTurnosAsignados(PriorityQueue<Turno> turnosAsignados) {
@@ -164,21 +178,10 @@ public class VentanaTurnoController implements Initializable {
         this.urlsVideos = urlsVideos;
     }
 
-    
     CircularDoublyLinkedList<String> urls = Video.leerArchivo("src/resources/videos.txt");
     Iterator<String> urlsVideos = urls.iterator();
     
-    public VentanaTurnoController() {
-        singleInstance = this;
-        tableList = FXCollections.observableArrayList();
-        puestosLibres = VentanaPuestosController.puestosCreados;
-        turnosOriginados = VentanaPacienteController.turnosCreados;
-        turnosAsignados = new PriorityQueue<>((Turno t1, Turno t2) -> t1.getPaciente().getSintoma().getPrioridad() - t2.getPaciente().getSintoma().getPrioridad());
-        iniciarPuestosVacios();
-        
-    }
-    
-    /*private void initMediaPlayer(final MediaView mediaView, final Iterator<String> urls) {
+    private void initMediaPlayer(final MediaView mediaView, final Iterator<String> urls) {
         if (urlsVideos.hasNext()) {
             MediaPlayer mediaPlayer = new MediaPlayer(new Media(this.getClass().getResource(urlsVideos.next()).toExternalForm()));
             mediaPlayer.setAutoPlay(true);
@@ -190,8 +193,7 @@ public class VentanaTurnoController implements Initializable {
             });
             mediaView.setMediaPlayer(mediaPlayer);
         }
-
-    }*/
+    }
     
     public void iniciarRegistroView() {
         try {
@@ -223,17 +225,41 @@ public class VentanaTurnoController implements Initializable {
         return singleInstance;
     }
     
-    public void asignarPuestoATurno() {
-        try{
-           if (puestosLibres.size() > 0 && !turnosOriginados.isEmpty()) {
-            tableList.add(turnosOriginados.poll());
+    public void asignarPuestoATurno(ActionEvent event) {
+        if (puestosLibres.size() > 0 && !VentanaPacienteController.turnosCreados.isEmpty()) {
+            Puesto p = puestosLibres.poll();
+            Turno t = VentanaPacienteController.turnosCreados.removeFirst();
+            TurnoPuesto tp = new TurnoPuesto(t,p);
+            System.out.println(tp);
+            tableList.add(tp);
             turnos.setItems(tableList);
-            } 
-        }catch(NullPointerException ex){
-            System.err.println(puestosLibres.size());
-            System.err.println(turnosOriginados.isEmpty());
-            System.err.println(VentanaPacienteController.getTurnosCreados());
         }
-        
+    }
+    
+    @FXML
+    private void mostrarPantalla(MouseEvent event) {
+        try {
+            Turno turnoSelect = turnos.getSelectionModel().getSelectedItem().getTurno();
+            select = turnos.getSelectionModel().getSelectedItem();
+            Stage anotherStage = new Stage();
+            FXMLLoader loader1 = new FXMLLoader(getClass().getResource("/vista/VentanaAtencion.fxml"));
+            Parent root1 = loader1.load();
+            pantallaAternderPaciente = loader1.getController();
+            pantallaAternderPaciente.fillInData(turnoSelect.getPaciente());
+            Scene scene1 = new Scene(root1);
+            pantallaAternderPaciente.setPrincipal(this);
+            anotherStage.setScene(scene1);
+            anotherStage.show();
+            turnos.getItems().remove(select);
+        }catch(NullPointerException ex){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Alert");
+            alert.setHeaderText("No ha seleccionado un turno o la tabla está vacía");
+            alert.setContentText("Añada pacientes para llenar la tabla o de clic en un turno existente.");
+            alert.show();
+        } 
+        catch (IOException ex) {
+            System.err.println(ex);
+        }
     }
 }

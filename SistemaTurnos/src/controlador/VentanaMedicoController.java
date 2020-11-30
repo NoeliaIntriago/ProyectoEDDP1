@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -64,6 +63,7 @@ public class VentanaMedicoController implements Initializable {
             Medico m = new Medico(lnombres[0], lnombres[1], lapellidos[0], lapellidos[1], especialidad.getValue());
             if(!doctoresRegistrados.contains(m)){
                 doctoresRegistrados.add(m);
+                System.out.println(doctoresRegistrados);
             }else{
                 mostrarAlerta("El doctor ya se encuentra registrado!", Alert.AlertType.ERROR);
             }

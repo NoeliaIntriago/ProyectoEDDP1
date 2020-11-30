@@ -12,8 +12,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.ListIterator;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,6 +24,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -37,24 +38,47 @@ import tda.Puesto;
  * @author Noelia Intriago
  */
 public class VentanaPuestosController implements Initializable {
+    
     public static LinkedList<Puesto> puestosCreados = new LinkedList<>();
     public LinkedList<Medico> medicosRegistrados;
+    private VentanaRegistroController principal;
+    private VentanaTurnoController vturno = VentanaTurnoController.getSingleInstance();
     
     @FXML
-    private TextField numero;
+    private TextField txtnumero;
     @FXML
-    private ComboBox<Medico> medico;
+    private ComboBox<Medico> medico;            
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         medicosRegistrados = VentanaMedicoController.doctoresRegistrados;
         medico.getItems().setAll(medicosRegistrados);
     }    
     
+    @FXML
     public void crearPuesto(ActionEvent event){
-        Puesto p = new Puesto(Integer.parseInt(numero.getText()), medico.getValue());
-        puestosCreados.add(p);
-        vaciarInputPuestos();
+        try{
+            if(Character.isDigit(txtnumero.getText().charAt(0))==false){
+                mostrarAlerta("Por favor, ingrese un dato numérico. No alfanumérico. No palabras.", Alert.AlertType.ERROR);            
+            }
+            String num= txtnumero.getText();
+            int num_1= Integer.parseInt(num);
+            Puesto p = new Puesto(num_1, medico.getValue());
+            medico.getValue().setPuesto(p);
+            vaciarInputPuestos();                       
+            actualizarListaDoctores();
+            guardarPuesto(p);
+        }catch(Exception e){
+            System.out.println("Ingrese bien pues >:c");
+        }
     }  
+    
+    public void guardarPuesto(Puesto p) {
+        vturno.getPuestosLibres().add(p);
+        puestosCreados.add(p);
+        txtnumero.setText("");
+        medico.setValue(null);
+    }
     
     public void regresar(ActionEvent event ){
         try {
@@ -71,8 +95,9 @@ public class VentanaPuestosController implements Initializable {
     }
     
     public void vaciarInputPuestos(){
-        numero.setText("");
+        txtnumero.setText("");
         medico.setValue(null);
+        medico.hide();
     }
     
     public static void serializar(){
@@ -98,4 +123,25 @@ public class VentanaPuestosController implements Initializable {
             Logger.getLogger(SistemaTurnos.class.getName()).log(Level.SEVERE, null, ex);
         }  
     } 
+    
+    public void mostrarAlerta(String mensaje, Alert.AlertType e){
+        Alert alert = new Alert(e);
+        alert.setTitle(" ");
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
+    }
+    
+    
+    private void actualizarListaDoctores() {
+        ListIterator<Medico> lit = medicosRegistrados.listIterator();
+        while (lit.hasNext()) {
+            if (lit.next().getPuesto() != null) {
+                lit.remove();
+            }
+        }
+        medico.getItems().setAll(medicosRegistrados);
+    }
+    
+    
 }
