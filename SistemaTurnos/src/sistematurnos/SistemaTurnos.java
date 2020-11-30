@@ -24,6 +24,7 @@ import javafx.stage.Stage;
  * @author Noelia Intriago
  */
 public class SistemaTurnos extends Application{
+    private VentanaTurnoController vt; 
 
     /**
      * @param args the command line arguments
@@ -46,8 +47,6 @@ public class SistemaTurnos extends Application{
             Scene scene = new Scene (root);
             stage.setScene(scene);
             stage.show();
-            
-        
         }catch(IOException ex){
             Logger.getLogger(SistemaTurnos.class.getName()).log(Level.SEVERE, null, ex);
         }
